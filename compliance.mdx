@@ -1,0 +1,379 @@
+---
+title: "Compliance"
+description: "Native multi-layered compliance architecture for institutional settlement"
+icon: "shield-check"
+---
+
+# Native Multi-Layered Built-in Compliance
+
+Meridian provides **enterprise-grade compliance by design** through a three-layer architecture that ensures regulatory adherence while protecting privacy and enabling institutional control.
+
+## Three Layers of Compliance
+
+Meridian's compliance framework operates at three distinct levels, each addressing different aspects of regulatory requirements and institutional needs.
+
+<CardGroup cols={3}>
+  <Card title="Layer 1: Vetted Network" icon="network-wired">
+    Proof-of-Authority consortium of known, regulated financial institutions with stringent KYB screening
+  </Card>
+  <Card title="Layer 2: Protocol Rules" icon="code">
+    Automated FATF Travel Rule compliance via RADIUS protocol with end-to-end encryption
+  </Card>
+  <Card title="Layer 3: Auditable Transparency" icon="eye">
+    Selective disclosure for regulators while protecting confidential data
+  </Card>
+</CardGroup>
+
+## Layer 1: A Vetted & Trusted Network
+
+**Foundation: Network-Level Trust**
+
+The Meridian network is secured by a **Proof-of-Authority (PoA) consortium** of known, regulated financial institutions that have passed stringent KYB screening, creating a foundational layer of trust and accountability.
+
+### Validator Vetting Process
+
+<Steps>
+  <Step title="Initial Application">
+    Financial institution submits application with:
+    - Corporate registration documents
+    - Regulatory licenses and certifications
+    - Beneficial ownership information
+    - Compliance program documentation
+  </Step>
+
+  <Step title="KYB Verification">
+    Comprehensive know-your-business screening including:
+    - Legal entity verification
+    - Regulatory license validation
+    - Sanctions screening (OFAC, UN, EU)
+    - Adverse media screening
+    - Ultimate beneficial owner identification
+  </Step>
+
+  <Step title="Technical Assessment">
+    Evaluation of:
+    - Infrastructure capabilities
+    - Security protocols
+    - Operational procedures
+    - Disaster recovery plans
+  </Step>
+
+  <Step title="Ongoing Monitoring">
+    Continuous compliance including:
+    - Annual re-certification
+    - License renewal verification
+    - Sanctions rescreening
+    - Performance monitoring
+  </Step>
+</Steps>
+
+### Network-Level Benefits
+
+<CardGroup cols={2}>
+  <Card title="Trusted Counterparties" icon="handshake">
+    Every institution on the network has been vetted, reducing counterparty risk and due diligence burden
+  </Card>
+
+  <Card title="Regulatory Alignment" icon="gavel">
+    All validators maintain regulatory compliance in their jurisdictions
+  </Card>
+
+  <Card title="Reputation-Based Security" icon="shield">
+    Validators have real-world accountability and reputational stake
+  </Card>
+
+  <Card title="Reduced Onboarding" icon="clock">
+    Pre-vetted network members streamline bilateral relationships
+  </Card>
+</CardGroup>
+
+## Layer 2: Protocol-Level Rules
+
+**Automated Compliance in Every Transaction**
+
+The RADIUS protocol **automates the peer-to-peer exchange of required sender and beneficiary information**, seamlessly integrating **FATF Travel Rule compliance** into every transaction.
+
+### FATF Travel Rule Compliance
+
+The Financial Action Task Force (FATF) Travel Rule (Recommendation 16) requires financial institutions to obtain, hold, and transmit required originator and beneficiary information for transactions above certain thresholds.
+
+<Tabs>
+  <Tab title="Requirements">
+    ### Travel Rule Requirements
+
+    **For Virtual Asset Service Providers (VASPs)**:
+
+    Transactions ≥ $1,000 (or equivalent) must include:
+
+    **Originator Information**:
+    - Name
+    - Account number or unique identifier
+    - Physical address OR national identity number OR date/place of birth
+
+    **Beneficiary Information**:
+    - Name
+    - Account number or unique identifier
+
+    **Transaction Information**:
+    - Amount
+    - Timestamp
+    - Asset type
+  </Tab>
+
+  <Tab title="RADIUS Implementation">
+    ### How RADIUS Ensures Compliance
+
+    **Automated Data Exchange**:
+    1. Sending institution initiates handshake with complete originator data
+    2. Receiving institution provides beneficiary data
+    3. Both parties validate data completeness
+    4. Settlement only proceeds after compliance checks pass
+
+    **Built-in Validation**:
+    - Required fields enforced at protocol level
+    - Threshold checks automatic
+    - Data format validation
+    - Cryptographic signatures ensure authenticity
+
+    **Privacy-Preserving**:
+    - All Travel Rule data exchanged off-chain
+    - End-to-end encryption between institutions
+    - Zero knowledge proofs for compliance verification
+    - Customer data never exposed publicly
+  </Tab>
+</Tabs>
+
+### Private Data Exchange
+
+Data is exchanged through **private, end-to-end encrypted channels**, never touching the public blockchain in order to protect customer privacy and meet institutional data protection requirements.
+
+<Steps>
+  <Step title="Sending Institution: Encrypt Travel Rule Data">
+    The sending institution encrypts all Travel Rule data (originator and beneficiary information) using end-to-end encryption before transmission.
+  </Step>
+
+  <Step title="Receiving Institution: Decrypt & Validate Data">
+    The receiving institution decrypts the data through the private encrypted channel and validates completeness and accuracy.
+  </Step>
+
+  <Step title="Both Parties: Sign Handshake">
+    Once both parties have validated the Travel Rule data, they cryptographically sign the handshake to authorize settlement.
+  </Step>
+
+  <Step title="On-Chain Settlement (No Customer Data)">
+    Only after the private handshake is complete does the settlement execute on the public blockchain. The blockchain records only the transaction hash and settlement details—no customer data is ever exposed publicly.
+  </Step>
+</Steps>
+
+**Key Privacy Protections:**
+- Customer data transmitted only through encrypted private channels
+- Zero customer information appears on public blockchain
+- End-to-end encryption protects data in transit
+- Only settlement hash and institutional IDs recorded on-chain
+
+### Additional Protocol-Level Rules
+
+Beyond Travel Rule compliance, RADIUS enforces:
+
+<AccordionGroup>
+  <Accordion title="Transaction Limits" icon="scale-balanced">
+    - Configurable per-transaction limits
+    - Daily/monthly volume limits
+    - Velocity checks
+    - Jurisdiction-specific thresholds
+  </Accordion>
+
+  <Accordion title="Sanctions Screening" icon="ban">
+    - Real-time sanctions list checking
+    - OFAC, UN, EU list integration
+    - Automatic transaction blocking for matches
+    - Audit trail of screening results
+  </Accordion>
+
+  <Accordion title="Reporting Requirements" icon="file-chart-column">
+    - Automated suspicious activity flagging
+    - Transaction record retention
+    - Regulatory report generation
+    - Audit log maintenance
+  </Accordion>
+</AccordionGroup>
+
+## Layer 3: Auditable Transparency with Privacy
+
+**Institutional Control with Regulatory Oversight**
+
+Institutions can deploy their own **permissioned applications**, giving them granular control over their own compliance rules and counterparty risk. All token transfers and interactions with permissioned applications are available to be selectively disclosed to provide an immutable audit trail for regulators or counterparties without exposing confidential data.
+
+### Permissioned Applications
+
+Each institution can deploy custom smart contracts with their own business logic and compliance rules:
+
+<CardGroup cols={2}>
+  <Card title="Custom Compliance Rules" icon="gavel">
+    - Define acceptable counterparties
+    - Set transaction limits and controls
+    - Implement jurisdiction-specific requirements
+    - Add additional verification steps
+  </Card>
+
+  <Card title="Risk Management" icon="shield-halved">
+    - Set exposure limits per counterparty
+    - Implement velocity checks
+    - Define acceptable transaction patterns
+    - Automated risk scoring
+  </Card>
+
+  <Card title="Data Protection" icon="lock">
+    - Control who can view transaction details
+    - Protect sensitive commercial information
+    - Implement data retention policies
+    - Manage access permissions
+  </Card>
+
+  <Card title="Workflow Automation" icon="diagram-project">
+    - Multi-signature approvals
+    - Time-locked settlements
+    - Conditional transactions
+    - Automated reconciliation
+  </Card>
+</CardGroup>
+
+### Selective Disclosure
+
+Institutions maintain **full privacy by default** with the ability to **selectively disclose** transaction details to authorized parties.
+
+<Tabs>
+  <Tab title="Default Privacy">
+    ### What Remains Private
+
+    By default, only counterparties to a transaction see:
+    - Full transaction details
+    - Customer information
+    - Compliance data
+    - Commercial terms
+
+    The public blockchain only records:
+    - Settlement hash
+    - Timestamp
+    - Token amounts (if disclosed)
+    - Participating institution IDs
+  </Tab>
+
+  <Tab title="Selective Disclosure">
+    ### Authorized Access
+
+    Institutions can grant access to:
+
+    **Regulators**:
+    - View all transactions for audit
+    - Access compliance data
+    - Review Travel Rule information
+    - Export transaction reports
+
+    **External Auditors**:
+    - Time-bound access to specific transactions
+    - Verification of balances and settlements
+    - Compliance program review
+
+    **Counterparty Verification**:
+    - Proof of payment
+    - Settlement confirmation
+    - Compliance attestation
+  </Tab>
+</Tabs>
+
+### Immutable Audit Trail
+
+All transactions create a **cryptographically verifiable audit trail** that:
+
+- ✅ Cannot be altered or deleted
+- ✅ Includes complete compliance metadata
+- ✅ Provides proof of regulatory adherence
+- ✅ Enables forensic investigation if needed
+- ✅ Supports regulatory reporting requirements
+
+## Regulatory Compliance by Jurisdiction
+
+Meridian's architecture supports compliance with major regulatory frameworks:
+
+<Tabs>
+  <Tab title="United States">
+    ### US Regulatory Compliance
+
+    - **FinCEN BSA/AML**: Money Services Business registration, AML program, SAR filing
+    - **OFAC Sanctions**: Real-time sanctions screening
+    - **State Money Transmitter**: Support for state-level licensing requirements
+    - **Travel Rule**: Full Recommendation 16 compliance
+    - **Recordkeeping**: 5-year transaction record retention
+  </Tab>
+
+  <Tab title="European Union">
+    ### EU Regulatory Compliance
+
+    - **5AMLD/6AMLD**: Anti-money laundering directives
+    - **MiCA**: Markets in Crypto-Assets regulation
+    - **GDPR**: Data protection and privacy
+    - **Travel Rule**: EUR 1,000 threshold compliance
+    - **PSD2**: Payment services directive
+  </Tab>
+
+  <Tab title="Other Jurisdictions">
+    ### Additional Jurisdictions
+
+    - **UK**: FCA registration, travel rule compliance
+    - **Singapore**: MAS licensing, PSA compliance
+    - **UAE**: VARA regulation, travel rule
+    - **Hong Kong**: SFC licensing, AML requirements
+
+    Custom compliance rules can be implemented for any jurisdiction.
+  </Tab>
+</Tabs>
+
+## Compliance Monitoring & Reporting
+
+### Built-in Compliance Tools
+
+<CardGroup cols={3}>
+  <Card title="Transaction Monitoring" icon="radar">
+    Real-time monitoring for suspicious patterns and regulatory thresholds
+  </Card>
+
+  <Card title="Sanctions Screening" icon="magnifying-glass">
+    Automated screening against global sanctions lists
+  </Card>
+
+  <Card title="Report Generation" icon="file-export">
+    Automated generation of regulatory reports and filings
+  </Card>
+
+  <Card title="Audit Logs" icon="scroll">
+    Comprehensive audit logs for all compliance activities
+  </Card>
+
+  <Card title="Alert Management" icon="bell">
+    Configurable alerts for compliance events requiring attention
+  </Card>
+
+  <Card title="Case Management" icon="folder-open">
+    Investigation and documentation of flagged transactions
+  </Card>
+</CardGroup>
+
+---
+
+<CardGroup cols={2}>
+  <Card
+    title="RADIUS Protocol"
+    icon="circle-nodes"
+    href="/radius-protocol"
+  >
+    Learn how RADIUS implements Travel Rule compliance
+  </Card>
+  <Card
+    title="API Reference"
+    icon="code"
+    href="/api-reference/introduction"
+  >
+    Explore compliance-related API endpoints
+  </Card>
+</CardGroup>

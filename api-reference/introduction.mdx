@@ -1,33 +1,182 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'API Reference'
+description: 'Complete API documentation for integrating with the Meridian Protocol'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+# Meridian Protocol API
 
-## Welcome
+This API reference provides comprehensive documentation for integrating your financial institution with the Meridian network and RADIUS Protocol.
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+## Overview
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+The Meridian API enables:
+- **Institution registration** in the RADIUS registry
+- **Discovery** of vetted counterparties
+- **Credential verification** using verifiable credentials
+- **Handshake initiation** for compliant settlement
+- **Transaction execution** with cryptographic certainty
+
+The Meridian network is a sovereign Layer 1 blockchain built specifically for stablecoin remittance and cross-border payments between financial institutions.
+
+## API Architecture
+
+### RADIUS Registry
+
+The RADIUS Protocol includes an **on-chain Registry smart contract** that maintains verified records of financial institutions:
+
+- **Institution identity**: Name, jurisdiction, and regulatory information
+- **Verifiable credentials**: KYB credentials and licenses
+- **Service offerings**: Remittance receiving, settlement, on/off-ramps
+- **Geographic coverage**: Supported currencies and countries
+- **Contact endpoints**: API endpoints for integration
+
+### RESTful API Layer
+
+The API provides a developer-friendly interface for:
+
+- **Registry queries**: Discover institutions by jurisdiction, currency, or service
+- **Credential verification**: Validate counterparty credentials
+- **Handshake management**: Initiate and manage RADIUS handshakes
+- **Transaction settlement**: Execute on-chain settlements
+- **Compliance data exchange**: Private Travel Rule data exchange
+
+### Integration Benefits
+
+- **Single integration**: Connect to all network institutions through one API
+- **Cryptographic security**: All operations cryptographically signed
+- **Real-time settlement**: 1-2 second finality
+- **Built-in compliance**: Automated Travel Rule compliance
+- **Privacy-preserving**: Sensitive data never exposed publicly
+
+## Use Cases
+
+The Meridian API supports multiple institutional use cases:
+
+### Remittance Senders
+- Discover receiving institutions in target countries
+- Verify counterparty credentials
+- Initiate compliant handshakes with Travel Rule data
+- Execute direct USD stablecoin settlements
+- Eliminate prefunding requirements
+
+### Remittance Receivers
+- Register to receive remittance payments
+- Accept handshake requests from vetted senders
+- Perform compliance checks on incoming payments
+- Credit beneficiary accounts instantly
+- Receive USD directly without intermediaries
+
+### Banks & Financial Institutions
+- Offer instant cross-border settlement to customers
+- Maintain full control with permissioned applications
+- Meet regulatory requirements with built-in compliance
+- Access global network without bilateral relationships
+
+## Who Uses This API?
+
+The Meridian API is designed for:
+
+- **Remittance Companies**: Money transfer operators and payment service providers
+- **Banks**: Traditional and digital banks offering cross-border services
+- **Fintech Companies**: Innovative payment platforms and wallets
+- **Financial Institutions**: Any licensed entity facilitating cross-border payments
+
+All participants must complete KYB screening and maintain proper regulatory credentials.
+
+## Getting Started
+
+<CardGroup cols={2}>
+  <Card title="Quickstart Guide" icon="rocket" href="/quickstart">
+    Complete integration walkthrough with code examples
+  </Card>
+  <Card title="RADIUS Protocol" icon="circle-nodes" href="/radius-protocol">
+    Learn about the discovery and settlement protocol
+  </Card>
+  <Card title="Authentication" icon="key" href="#authentication">
+    API authentication and security
+  </Card>
+  <Card title="SDKs" icon="code" href="#sdks">
+    Official SDKs for JavaScript and Python
+  </Card>
+</CardGroup>
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All API requests require authentication using:
+- **API Key**: Provided during onboarding (`X-API-Key` header)
+- **Private Key**: For signing transactions (stored securely, never transmitted)
+- **Institution ID**: Your unique institution identifier
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+Example request:
+```bash
+curl https://api.meridian.network/v1/registry/query \
+  -H "X-API-Key: your-api-key" \
+  -H "Content-Type: application/json" \
+  -d '{"jurisdiction": "US"}'
 ```
+
+## SDKs
+
+Official SDKs are available for:
+
+### JavaScript/TypeScript
+```bash
+npm install @meridian/sdk
+```
+
+### Python
+```bash
+pip install meridian-sdk
+```
+
+See the [Quickstart Guide](/quickstart) for detailed SDK usage examples.
+
+## OpenAPI Specification
+
+This documentation is auto-generated from our OpenAPI 3.1.0 specification. The API endpoints appear in the sidebar.
+
+## Error Handling
+
+The API uses standard HTTP status codes and structured error responses:
+
+| Status Code | Description |
+|------------|-------------|
+| `200` | Success |
+| `400` | Bad Request - Invalid parameters |
+| `401` | Unauthorized - Invalid API key |
+| `403` | Forbidden - Insufficient permissions |
+| `404` | Not Found - Resource doesn't exist |
+| `429` | Too Many Requests - Rate limit exceeded |
+| `500` | Internal Server Error |
+
+Example error response:
+```json
+{
+  "error": {
+    "code": "INVALID_CREDENTIALS",
+    "message": "Institution credentials could not be verified",
+    "details": {
+      "credential_type": "KYB",
+      "reason": "Expired license"
+    }
+  }
+}
+```
+
+## Rate Limits
+
+API endpoints have the following rate limits:
+- **Registry queries**: 100 requests/minute
+- **Handshake operations**: 1000 requests/minute
+- **Settlement transactions**: 5000 requests/minute
+
+Rate limit information is included in response headers:
+- `X-RateLimit-Limit`: Maximum requests per window
+- `X-RateLimit-Remaining`: Remaining requests in current window
+- `X-RateLimit-Reset`: Unix timestamp when the rate limit resets
+
+## Support
+
+<Note>
+Need help integrating? Contact **support@meridian.network** or visit our [developer community](https://community.meridian.network).
+</Note>

@@ -1,0 +1,206 @@
+---
+title: "Chain Architecture"
+description: "Technical foundation and performance characteristics of the Meridian blockchain"
+icon: "cubes"
+---
+
+# Meridian Chain Architecture
+
+Meridian is a **sovereign Layer 1 blockchain** that provides full control over its own execution environment, validator set, and economic model. This architecture offers performance isolation while leveraging the core security benefits of a foundational public network.
+
+## Sovereign L1 Design
+
+As a sovereign L1, Meridian maintains:
+
+- **Independent validators**: Purpose-selected financial institutions
+- **Custom token economics**: Tailored for institutional settlement use cases
+- **Flexible gas policies**: Optimized for predictable transaction costs
+- **Full governance control**: Ability to fine-tune performance and rules
+
+This sovereignty allows Meridian to optimize specifically for institutional stablecoin settlement without sacrificing scalability or reliability.
+
+## Consensus Mechanism
+
+### High-Performance Snowman Consensus
+
+The underlying consensus mechanism is **purpose-built for processing transactions in a linear, ordered sequence**. This makes it exceptionally fast and efficient for complex operations like smart contract execution.
+
+Key characteristics:
+- Linear transaction ordering ensures predictable execution
+- Optimized for high-value financial settlement
+- Efficient handling of smart contract interactions
+- Low computational overhead
+
+### Rapid & Irreversible Finality
+
+The protocol achieves agreement through a **lightweight and rapid polling process among validators**. This allows transactions to be confirmed and finalized in seconds, providing the certainty required for high-value settlement.
+
+<Info>
+**Finality**: Transactions reach irreversible finality in **1-2 seconds**, providing near-instant confirmation for institutional settlement.
+</Info>
+
+## Proof-of-Authority (PoA) Model
+
+Meridian uses a **permissioned Proof-of-Authority consensus** where block production is handled exclusively by a vetted set of known, trusted institutions.
+
+### Why PoA for Institutional Settlement?
+
+<CardGroup cols={2}>
+  <Card title="Identity-Based Security" icon="id-card">
+    Security is derived from validator identity and reputation, not from staked capital. This aligns the network's integrity with the real-world accountability of its operators.
+  </Card>
+
+  <Card title="Regulatory Compliance" icon="gavel">
+    All validators must pass stringent KYC/KYB screening, ensuring a foundation of trust and regulatory awareness for all network participants.
+  </Card>
+
+  <Card title="Selective Participation" icon="toggle-on">
+    Validators choose to opt-in for broader network discoverability and participation, maintaining control over their engagement level.
+  </Card>
+
+  <Card title="Performance Guarantees" icon="gauge-high">
+    Known validator set enables optimized consensus performance and predictable transaction processing.
+  </Card>
+</CardGroup>
+
+### Validator Requirements
+
+All validators on the Meridian network must:
+
+1. **Pass KYB Screening**: Stringent know-your-business verification
+2. **Be Licensed Entities**: Regulated financial institutions with proper credentials
+3. **Maintain Infrastructure**: Run reliable, performant validator nodes
+4. **Opt-in for Discovery**: Choose whether to participate in the broader institutional registry
+5. **Comply with Network Rules**: Adhere to governance and operational standards
+
+## Performance Specifications
+
+Meridian launches with consensus-level performance guarantees:
+
+<ResponseField name="Finality" type="1-2 seconds" required>
+  Near-instant probabilistic finality with cryptographic certainty
+</ResponseField>
+
+<ResponseField name="Latency" type="<2 seconds" required>
+  Transactions typically confirmed in under 2 seconds
+</ResponseField>
+
+<ResponseField name="Throughput" type="4,500+ TPS" required>
+  Capable of processing 4,500+ transactions per second across the network under optimal conditions
+</ResponseField>
+
+<ResponseField name="Block Time" type="~2 seconds" required>
+  Consistent block production for predictable settlement
+</ResponseField>
+
+### Real-World Performance
+
+For institutional settlement use cases:
+
+- **Single remittance payment**: Confirmed in 1-2 seconds
+- **Batch settlement**: 100 payments processed in ~2 seconds
+- **High-volume corridor**: Support for thousands of simultaneous transactions
+- **Peak capacity**: Network can handle 4,500+ TPS burst loads
+
+## EVM Compatibility
+
+Meridian is built on **existing EVM blockchain infrastructure** but maintains full sovereignty. This provides:
+
+<Tabs>
+  <Tab title="Developer Benefits">
+    - **Familiar tooling**: Use standard Ethereum development tools
+    - **Smart contract compatibility**: Deploy Solidity contracts
+    - **Easy integration**: Standard JSON-RPC interfaces
+    - **Rich ecosystem**: Leverage existing libraries and frameworks
+  </Tab>
+
+  <Tab title="Institutional Benefits">
+    - **Proven technology**: Battle-tested EVM execution environment
+    - **Security**: Well-audited virtual machine
+    - **Interoperability**: Potential bridging to other EVM chains
+    - **Maturity**: Years of production use and optimization
+  </Tab>
+</Tabs>
+
+## Network of Networks Model
+
+Meridian operates as a **"network of networks"** where institutions can deploy their own private, permissioned applications on shared blockchain infrastructure.
+
+### Multi-Layer Design
+
+Meridian's architecture consists of two key layers:
+
+<AccordionGroup>
+  <Accordion title="Private Application Layer (Institution-Specific)" icon="shield">
+    Each financial institution can deploy its own private, permissioned application with:
+    - **Custom compliance rules** tailored to their jurisdiction
+    - **Proprietary business logic** for their specific use cases
+    - **Private data storage** for sensitive commercial information
+    - **Granular access controls** for their counterparties
+
+    Examples: Institution A runs a private app with Nigerian banking compliance rules, while Institution B runs a separate app with Kenyan mobile money compliance.
+  </Accordion>
+
+  <Accordion title="Shared Settlement Layer (L1 Blockchain)" icon="link">
+    All institutions share a common Layer 1 blockchain for settlement:
+    - **USD Stablecoin Transfers**: Direct peer-to-peer settlement
+    - **Immutable Audit Trail**: Permanent record of all settlements
+    - **Cryptographic Certainty**: Verifiable proof of transactions
+    - **Consensus Security**: PoA validation by vetted institutions
+
+    This shared layer enables interoperability while preserving institutional sovereignty.
+  </Accordion>
+</AccordionGroup>
+
+### Architecture Benefits
+
+<CardGroup cols={2}>
+  <Card title="Granular Control" icon="sliders">
+    Each institution sets its own compliance rules and business logic
+  </Card>
+  <Card title="Data Protection" icon="lock">
+    Sensitive commercial data stays private within institutional apps
+  </Card>
+  <Card title="Shared Settlement" icon="arrows-left-right">
+    All institutions benefit from common settlement infrastructure
+  </Card>
+  <Card title="Selective Disclosure" icon="eye">
+    Transparent audit trail available only to authorized parties
+  </Card>
+</CardGroup>
+
+## Security Model
+
+### Multi-Layer Security
+
+1. **Validator Identity**: Known, regulated financial institutions
+2. **Reputation-Based**: Validators have real-world accountability
+3. **Cryptographic Verification**: All transactions cryptographically signed
+4. **Immutable Ledger**: Tamper-proof transaction history
+5. **Distributed Consensus**: Multiple validators must agree on state
+
+### Compliance & Auditing
+
+- **Immutable audit trails**: Every transaction permanently recorded
+- **Selective transparency**: Institutions control who sees what
+- **Regulatory access**: Authorized regulators can audit transactions
+- **Privacy preservation**: Customer data never on public blockchain
+
+---
+
+<CardGroup cols={2}>
+  <Card
+    title="RADIUS Protocol"
+    icon="circle-nodes"
+    href="/radius-protocol"
+  >
+    Learn how institutions discover and transact with each other
+  </Card>
+  <Card
+    title="Compliance Features"
+    icon="shield-check"
+    href="/compliance"
+  >
+    Understand Meridian's multi-layered compliance approach
+  </Card>
+</CardGroup>

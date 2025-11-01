@@ -1,0 +1,275 @@
+---
+title: "RADIUS Protocol"
+description: "Institutional discovery and settlement protocol on the Meridian network"
+icon: "circle-nodes"
+---
+
+# RADIUS Protocol
+
+**Discoverability within the Network**
+
+Meridian replaces the need for costly, pre-established banking relationships with an open, real-time network for institutional settlement, powered by the **RADIUS Protocol**.
+
+RADIUS enables financial institutions to discover vetted counterparties, verify their credentials, establish secure communication channels, and settle transactions—all without pre-existing relationships or bespoke integrations.
+
+## How RADIUS Works
+
+<Steps>
+  <Step title="Discover Vetted Partners Instantly">
+    All licensed institutions running nodes on the network can opt-in for discovery. Once opted in, they appear in the RADIUS registry with verified credentials and service offerings.
+
+    **The Registry Contains**:
+    - Institution identity and legal information
+    - Regulatory licenses and jurisdictions
+    - Supported services (remittance, settlement, on/off-ramps)
+    - Geographic coverage and currency support
+    - Verifiable credentials issued by trusted authorities
+  </Step>
+
+  <Step title="Instant Peer Verification">
+    An institution can look up its counterparty on the registry and instantly verify their identity and credentials (e.g., licenses, regulatory status) using **Verifiable Credentials (VCs)**.
+
+    This removes ambiguity and the need for third-party validation.
+
+    **Verification Includes**:
+    - KYB/KYC completion status
+    - Active regulatory licenses
+    - Jurisdiction of operation
+    - Compliance certifications
+    - Reputation scores (if applicable)
+  </Step>
+
+  <Step title="Peer-to-Peer Handshake">
+    Once verified, the two institutions use the RADIUS Protocol to establish a **programmatic, end-to-end encrypted handshake** in order to pass the required compliance data and settlement instructions.
+
+    **The Handshake Exchanges**:
+    - Sender information (required for Travel Rule compliance)
+    - Beneficiary information
+    - Transaction details and amount
+    - Settlement instructions
+    - Compliance attestations
+
+    All data is exchanged through **private, encrypted channels**—never exposed on the public blockchain.
+  </Step>
+
+  <Step title="Settle Directly, On-Chain">
+    Once the final handshake payload is signed by both parties, the settlement occurs **peer-to-peer on the Meridian chain**.
+
+    The entire process—from discovery to transaction building to settlement—happens directly between the two parties.
+
+    **Settlement Characteristics**:
+    - 1-2 second finality
+    - Cryptographic proof of payment
+    - Immutable audit trail
+    - No intermediaries
+  </Step>
+</Steps>
+
+## Key Features
+
+<CardGroup cols={2}>
+  <Card title="One-to-Many Discovery" icon="globe">
+    A single integration with RADIUS enables institutions to transact with **any** vetted institution on the network. No need for bilateral relationships or custom integrations with each counterparty.
+  </Card>
+
+  <Card title="Verifiable Credentials" icon="certificate">
+    Cryptographically verifiable credentials ensure authenticity without relying on centralized authorities. VCs are issued by trusted entities and can be verified instantly by any counterparty.
+  </Card>
+
+  <Card title="Privacy-Preserving" icon="lock">
+    Compliance data and sensitive information are exchanged through end-to-end encrypted channels. Only settlement transactions appear on-chain, with full privacy for customer data.
+  </Card>
+
+  <Card title="Programmatic Integration" icon="code">
+    Standard API interfaces make it easy to integrate RADIUS into existing systems. Automated workflows reduce manual processing and errors.
+  </Card>
+</CardGroup>
+
+## Discovery Process
+
+### Registry Structure
+
+The RADIUS registry is an **on-chain smart contract** that maintains verified records of all participating institutions.
+
+**Example Registry Entry:**
+
+<ResponseField name="institutionId" type="string" required>
+  Unique identifier for the institution
+</ResponseField>
+
+<ResponseField name="name" type="string" required>
+  Institution legal name (e.g., "Example Bank")
+</ResponseField>
+
+<ResponseField name="jurisdiction" type="string" required>
+  Country code where institution is licensed (e.g., "US")
+</ResponseField>
+
+<ResponseField name="licenses" type="array" required>
+  Array of regulatory licenses
+  - `type`: License type (e.g., "MSB")
+  - `number`: License number
+  - `issuer`: Regulatory authority
+  - `expiryDate`: Expiration date
+</ResponseField>
+
+<ResponseField name="services" type="array" required>
+  Services offered (e.g., "remittance-receiving", "usd-offramp")
+</ResponseField>
+
+<ResponseField name="supportedCurrencies" type="array" required>
+  Currency codes supported (e.g., ["USD", "NGN", "KES"])
+</ResponseField>
+
+<ResponseField name="verifiableCredentials" type="array" required>
+  Cryptographically verifiable credentials
+</ResponseField>
+
+<ResponseField name="contactEndpoint" type="string" required>
+  API endpoint for integration
+</ResponseField>
+
+### Querying the Registry
+
+Institutions can search the registry by:
+- **Geography**: Find institutions in specific countries
+- **Currency**: Find institutions supporting specific currencies
+- **Services**: Find institutions offering specific services (e.g., remittance receiving)
+- **Licenses**: Filter by regulatory credentials
+
+<CodeGroup>
+```javascript JavaScript
+// Query registry for institutions in Nigeria supporting NGN
+const institutions = await meridian.registry.query({
+  jurisdiction: 'NG',
+  supportedCurrencies: ['NGN'],
+  services: ['remittance-receiving']
+});
+
+// Verify an institution's credentials
+const verified = await meridian.verifyCredentials(
+  institutions[0].verifiableCredentials
+);
+```
+
+```python Python
+# Query registry for institutions in Nigeria supporting NGN
+institutions = meridian.registry.query(
+    jurisdiction='NG',
+    supported_currencies=['NGN'],
+    services=['remittance-receiving']
+)
+
+# Verify an institution's credentials
+verified = meridian.verify_credentials(
+    institutions[0].verifiable_credentials
+)
+```
+</CodeGroup>
+
+## Compliance Integration
+
+RADIUS seamlessly integrates **FATF Travel Rule compliance** into every transaction through the encrypted handshake process.
+
+### Travel Rule Data Exchange
+
+<AccordionGroup>
+  <Accordion title="Originator Information" icon="user">
+    - Full name
+    - Account number or unique identifier
+    - Physical address or national identity number
+    - Date and place of birth (if applicable)
+  </Accordion>
+
+  <Accordion title="Beneficiary Information" icon="user-check">
+    - Full name
+    - Account number or unique identifier
+  </Accordion>
+
+  <Accordion title="Transaction Information" icon="money-bill-transfer">
+    - Transaction amount
+    - Currency
+    - Transaction type
+    - Timestamp
+  </Accordion>
+</AccordionGroup>
+
+All Travel Rule data is:
+- ✅ Exchanged privately between counterparties
+- ✅ End-to-end encrypted
+- ✅ Never exposed on the public blockchain
+- ✅ Available for regulatory audits when required
+- ✅ Automatically validated before settlement
+
+## Integration Example
+
+### End-to-End Payment Flow
+
+```javascript
+// 1. Discover receiving institution
+const receivers = await meridian.registry.query({
+  jurisdiction: 'KE',
+  supportedCurrencies: ['KES'],
+  services: ['remittance-receiving']
+});
+
+const receiver = receivers[0];
+
+// 2. Verify credentials
+const credentialsValid = await meridian.verifyCredentials(
+  receiver.verifiableCredentials
+);
+
+if (!credentialsValid) {
+  throw new Error('Receiver credentials invalid');
+}
+
+// 3. Initiate encrypted handshake with Travel Rule data
+const handshake = await meridian.radius.initiateHandshake({
+  receiver: receiver.institutionId,
+  originator: {
+    name: 'John Doe',
+    accountNumber: '123456789',
+    address: '123 Main St, New York, NY'
+  },
+  beneficiary: {
+    name: 'Jane Smith',
+    accountNumber: '987654321'
+  },
+  amount: '1000',
+  currency: 'USD'
+});
+
+// 4. Wait for receiver to accept and sign handshake
+await handshake.waitForSignature();
+
+// 5. Execute on-chain settlement
+const tx = await meridian.settle({
+  handshakeId: handshake.id,
+  amount: '1000',
+  token: 'USDC'
+});
+
+// 6. Confirm finality
+await tx.waitForFinality(); // ~1-2 seconds
+console.log('Settlement complete:', tx.hash);
+```
+
+---
+
+<CardGroup cols={2}>
+  <Card
+    title="API Reference"
+    icon="code"
+    href="/api-reference/introduction"
+  >
+    Explore the complete RADIUS API specification
+  </Card>
+  <Card
+    title="Integration Guide"
+    icon="book"
+    href="/quickstart"
+  >
+    Step-by-step guide to integrating RADIUS
+  </Card>
+</CardGroup>

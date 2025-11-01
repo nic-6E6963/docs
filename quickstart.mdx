@@ -1,80 +1,421 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: "Getting Started"
+description: "Integrate your institution with the Meridian network in minutes"
+icon: "rocket"
 ---
 
-## Get started in three steps
+# Getting Started with Meridian
 
-Get your documentation site running locally and make your first customization.
+This guide will walk you through integrating your financial institution with the Meridian network and completing your first cross-border settlement.
 
-### Step 1: Set up your local environment
+## Prerequisites
 
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 2: Deploy your changes
-
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
-
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
-
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 3: Go live
-
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
-
-## Next steps
-
-Now that you have your docs running, explore these key features:
+Before you begin, ensure you have:
 
 <CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
+  <Card title="Institution Verification" icon="building">
+    Your institution must be a licensed financial entity with proper regulatory credentials
+  </Card>
+  <Card title="KYB Completion" icon="id-card">
+    Complete Know-Your-Business screening for network participation
+  </Card>
+  <Card title="Node Infrastructure" icon="server">
+    Infrastructure to run a validator node or API integration capability
+  </Card>
+  <Card title="Development Environment" icon="code">
+    Node.js 18+ or Python 3.9+ for SDK integration
+  </Card>
 </CardGroup>
 
+## Step 1: Apply for Network Access
+
+<Steps>
+  <Step title="Submit Application">
+    Contact the Meridian team to begin the onboarding process:
+    - Provide corporate registration documents
+    - Submit regulatory licenses
+    - Complete beneficial ownership disclosure
+    - Describe intended use cases
+  </Step>
+
+  <Step title="KYB Verification">
+    Complete the comprehensive know-your-business screening:
+    - Legal entity verification
+    - License validation
+    - Sanctions screening
+    - Adverse media check
+  </Step>
+
+  <Step title="Technical Onboarding">
+    Work with the Meridian team to set up your infrastructure:
+    - Validator node setup (if becoming a validator)
+    - API credentials provisioning
+    - Network connectivity testing
+    - Security configuration
+  </Step>
+
+  <Step title="Testnet Access">
+    Receive access to the Meridian testnet to:
+    - Test integrations safely
+    - Validate compliance workflows
+    - Train your team
+    - Prepare for production
+  </Step>
+</Steps>
+
+## Step 2: Install the SDK
+
+<CodeGroup>
+```bash JavaScript/TypeScript
+npm install @meridian/sdk
+```
+
+```bash Python
+pip install meridian-sdk
+```
+</CodeGroup>
+
+## Step 3: Initialize Your Connection
+
+<CodeGroup>
+```javascript JavaScript
+import { Meridian } from '@meridian/sdk';
+
+const meridian = new Meridian({
+  network: 'testnet', // or 'mainnet'
+  apiKey: process.env.MERIDIAN_API_KEY,
+  privateKey: process.env.MERIDIAN_PRIVATE_KEY,
+  institutionId: 'your-institution-id'
+});
+
+// Verify connection
+const status = await meridian.getNetworkStatus();
+console.log('Connected to Meridian:', status);
+```
+
+```python Python
+from meridian import Meridian
+
+meridian = Meridian(
+    network='testnet',  # or 'mainnet'
+    api_key=os.getenv('MERIDIAN_API_KEY'),
+    private_key=os.getenv('MERIDIAN_PRIVATE_KEY'),
+    institution_id='your-institution-id'
+)
+
+# Verify connection
+status = meridian.get_network_status()
+print('Connected to Meridian:', status)
+```
+</CodeGroup>
+
+## Step 4: Register Your Institution
+
+Register your institution in the RADIUS registry to enable discovery:
+
+<CodeGroup>
+```javascript JavaScript
+// Register your institution with service offerings
+const registration = await meridian.registry.register({
+  name: 'Your Bank Name',
+  jurisdiction: 'US',
+  licenses: [
+    {
+      type: 'MSB',
+      number: '31000-xxx-xxx',
+      issuer: 'FinCEN',
+      expiryDate: '2026-12-31'
+    }
+  ],
+  services: [
+    'remittance-receiving',
+    'usd-offramp'
+  ],
+  supportedCurrencies: ['USD', 'EUR', 'NGN'],
+  contactEndpoint: 'https://api.yourbank.com/meridian',
+  verifiableCredentials: [
+    // Your KYB credentials
+  ],
+  optInForDiscovery: true
+});
+
+console.log('Registration complete:', registration);
+```
+
+```python Python
+# Register your institution with service offerings
+registration = meridian.registry.register(
+    name='Your Bank Name',
+    jurisdiction='US',
+    licenses=[
+        {
+            'type': 'MSB',
+            'number': '31000-xxx-xxx',
+            'issuer': 'FinCEN',
+            'expiryDate': '2026-12-31'
+        }
+    ],
+    services=[
+        'remittance-receiving',
+        'usd-offramp'
+    ],
+    supported_currencies=['USD', 'EUR', 'NGN'],
+    contact_endpoint='https://api.yourbank.com/meridian',
+    verifiable_credentials=[
+        # Your KYB credentials
+    ],
+    opt_in_for_discovery=True
+)
+
+print('Registration complete:', registration)
+```
+</CodeGroup>
+
+## Step 5: Complete Your First Settlement
+
+### For Remittance Senders
+
+<CodeGroup>
+```javascript JavaScript
+// 1. Discover receiving institution
+const receivers = await meridian.registry.query({
+  jurisdiction: 'NG',
+  supportedCurrencies: ['NGN'],
+  services: ['remittance-receiving']
+});
+
+const receiver = receivers[0];
+
+// 2. Verify credentials
+const valid = await meridian.verifyCredentials(
+  receiver.verifiableCredentials
+);
+
+if (!valid) throw new Error('Invalid credentials');
+
+// 3. Initiate RADIUS handshake with Travel Rule data
+const handshake = await meridian.radius.initiateHandshake({
+  receiver: receiver.institutionId,
+  originator: {
+    name: 'John Doe',
+    accountNumber: '123456789',
+    address: '123 Main St, New York, NY 10001'
+  },
+  beneficiary: {
+    name: 'Jane Smith',
+    accountNumber: '987654321'
+  },
+  amount: '1000.00',
+  currency: 'USD'
+});
+
+// 4. Wait for receiver acceptance
+await handshake.waitForSignature();
+
+// 5. Execute settlement
+const tx = await meridian.settle({
+  handshakeId: handshake.id,
+  amount: '1000',
+  token: 'USDC'
+});
+
+// 6. Confirm finality (~1-2 seconds)
+await tx.waitForFinality();
+console.log('Settlement complete:', tx.hash);
+```
+
+```python Python
+# 1. Discover receiving institution
+receivers = meridian.registry.query(
+    jurisdiction='NG',
+    supported_currencies=['NGN'],
+    services=['remittance-receiving']
+)
+
+receiver = receivers[0]
+
+# 2. Verify credentials
+valid = meridian.verify_credentials(
+    receiver['verifiable_credentials']
+)
+
+if not valid:
+    raise Exception('Invalid credentials')
+
+# 3. Initiate RADIUS handshake with Travel Rule data
+handshake = meridian.radius.initiate_handshake(
+    receiver=receiver['institution_id'],
+    originator={
+        'name': 'John Doe',
+        'account_number': '123456789',
+        'address': '123 Main St, New York, NY 10001'
+    },
+    beneficiary={
+        'name': 'Jane Smith',
+        'account_number': '987654321'
+    },
+    amount='1000.00',
+    currency='USD'
+)
+
+# 4. Wait for receiver acceptance
+handshake.wait_for_signature()
+
+# 5. Execute settlement
+tx = meridian.settle(
+    handshake_id=handshake.id,
+    amount='1000',
+    token='USDC'
+)
+
+# 6. Confirm finality (~1-2 seconds)
+tx.wait_for_finality()
+print('Settlement complete:', tx.hash)
+```
+</CodeGroup>
+
+### For Remittance Receivers
+
+<CodeGroup>
+```javascript JavaScript
+// Set up webhook endpoint to receive handshake requests
+meridian.radius.onHandshakeRequest(async (handshake) => {
+  // 1. Verify originator institution credentials
+  const senderValid = await meridian.verifyCredentials(
+    handshake.sender.credentials
+  );
+
+  if (!senderValid) {
+    return handshake.reject('Invalid sender credentials');
+  }
+
+  // 2. Perform compliance checks on Travel Rule data
+  const complianceCheck = await performComplianceChecks({
+    originator: handshake.originator,
+    beneficiary: handshake.beneficiary,
+    amount: handshake.amount
+  });
+
+  if (!complianceCheck.passed) {
+    return handshake.reject('Compliance check failed');
+  }
+
+  // 3. Verify beneficiary exists in your system
+  const beneficiary = await lookupAccount(
+    handshake.beneficiary.accountNumber
+  );
+
+  if (!beneficiary) {
+    return handshake.reject('Beneficiary not found');
+  }
+
+  // 4. Accept and sign handshake
+  await handshake.accept({
+    beneficiary: {
+      name: beneficiary.name,
+      accountNumber: beneficiary.accountNumber
+    }
+  });
+
+  // 5. Listen for settlement
+  handshake.onSettlement(async (tx) => {
+    // Credit beneficiary account in local currency
+    await creditAccount(
+      beneficiary.accountNumber,
+      convertToLocalCurrency(tx.amount, 'NGN')
+    );
+
+    console.log('Beneficiary credited:', tx.hash);
+  });
+});
+```
+
+```python Python
+# Set up webhook endpoint to receive handshake requests
+@meridian.radius.on_handshake_request
+async def handle_handshake(handshake):
+    # 1. Verify originator institution credentials
+    sender_valid = await meridian.verify_credentials(
+        handshake.sender.credentials
+    )
+
+    if not sender_valid:
+        return handshake.reject('Invalid sender credentials')
+
+    # 2. Perform compliance checks on Travel Rule data
+    compliance_check = await perform_compliance_checks(
+        originator=handshake.originator,
+        beneficiary=handshake.beneficiary,
+        amount=handshake.amount
+    )
+
+    if not compliance_check.passed:
+        return handshake.reject('Compliance check failed')
+
+    # 3. Verify beneficiary exists in your system
+    beneficiary = await lookup_account(
+        handshake.beneficiary.account_number
+    )
+
+    if not beneficiary:
+        return handshake.reject('Beneficiary not found')
+
+    # 4. Accept and sign handshake
+    await handshake.accept(
+        beneficiary={
+            'name': beneficiary.name,
+            'account_number': beneficiary.account_number
+        }
+    )
+
+    # 5. Listen for settlement
+    @handshake.on_settlement
+    async def handle_settlement(tx):
+        # Credit beneficiary account in local currency
+        await credit_account(
+            beneficiary.account_number,
+            convert_to_local_currency(tx.amount, 'NGN')
+        )
+
+        print('Beneficiary credited:', tx.hash)
+```
+</CodeGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card
+    title="Explore RADIUS Protocol"
+    icon="circle-nodes"
+    href="/radius-protocol"
+  >
+    Learn more about institutional discovery and settlement
+  </Card>
+  <Card
+    title="API Reference"
+    icon="code"
+    href="/api-reference/introduction"
+  >
+    Explore the complete API documentation
+  </Card>
+  <Card
+    title="Compliance Guide"
+    icon="shield-check"
+    href="/compliance"
+  >
+    Understand multi-layered compliance requirements
+  </Card>
+  <Card
+    title="Architecture Deep Dive"
+    icon="cubes"
+    href="/architecture"
+  >
+    Learn about Meridian's technical foundation
+  </Card>
+</CardGroup>
+
+## Support
+
 <Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
+**Need help?** Contact the Meridian team at support@meridian.network or join our developer community.
 </Note>
